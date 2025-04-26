@@ -10,9 +10,9 @@ entity Products : cuid, managed {
     product       : String(8);
     productName   : String(80);
     description   : LargeString;
-    category      : Association to Categories; //category      --- category_ID
-    subCategory   : Association to SubCategories; //subCategory   --- subCategory_ID
-    statu         : Association to Status; //statu --- statu_code
+    category      : Association to Categories;          //category      --- category_ID
+    subCategory   : Association to SubCategories;       //subCategory   --- subCategory_ID
+    statu         : Association to Status;              //statu --- statu_code
     price         : Decimal(5, 2);
     rating        : Decimal(3, 2);
     currency      : String;
@@ -83,7 +83,8 @@ entity Status : CodeList {
             InStock         = 'In Stock';
             OutOfStock      = 'Out of Stock';
             LowAvailability = 'Low Availabilit';
-        }
+        };
+    criticality: Integer;
 };
 
 /** Value Helps */
@@ -96,7 +97,7 @@ entity Categories : cuid {
 
 entity SubCategories : cuid {
     subCategory : String(80);
-    category    : Association to Categories;
+    category    : Association to Categories;        // category ($expand)   category_ID
 };
 
 entity Departments : cuid {
