@@ -1,6 +1,7 @@
 using {LogaliGroup as service} from '../service';
 using from './annotations-suppliers';
 using from './annotations-productdetails.cds';
+using from './annotations-reviews';
 
 annotate service.Products with {
     product     @title            : 'Product';
@@ -239,7 +240,14 @@ annotate service.Products with @(
         {
             $Type : 'UI.ReferenceFacet',
             Target : 'detail/@UI.FieldGroup',
-            Label : 'Product Information'
+            Label : 'Product Information',
+            ID : 'ProductInformation'
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target : 'toReviews/@UI.LineItem',
+            Label : 'Reviews',
+            ID : 'Reviews'
         },
     ]
 );
