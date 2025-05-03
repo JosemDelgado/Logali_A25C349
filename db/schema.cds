@@ -71,6 +71,7 @@ entity Inventories : cuid {
 };
 
 entity Sales : cuid {
+    monthCode     : String(2);
     month         : String(20);
     year          : String(4);
     quantitySales : Integer;
@@ -83,7 +84,7 @@ entity Status : CodeList {
     key code        : String(20) enum {
             InStock = 'In Stock';
             OutOfStock = 'Out of Stock';
-            LowAvailability = 'Low Availabilit';
+            LowAvailability = 'Low Availability';
         };
         criticality : Integer;
 };

@@ -75,15 +75,16 @@ annotate service.Products with {
 
 
 annotate service.Products with @(
-    // Capabilities.FilterRestrictions : {
-    //     $Type : 'Capabilities.FilterRestrictionsType',
-    //     FilterExpressionRestrictions : [
-    //         {
-    //             $Type : 'Capabilities.FilterExpressionRestrictionType',
-    //             AllowedExpressions : 'SearchExpression'
-    //         }
-    //     ]
-    // },
+    Capabilities.FilterRestrictions: {
+        $Type : 'Capabilities.FilterRestrictionsType',
+        FilterExpressionRestrictions : [
+            {
+                $Type : 'Capabilities.FilterExpressionRestrictionType',
+                Property : product,
+                AllowedExpressions : 'SearchExpression'
+            }
+        ]
+    },
     UI.HeaderInfo         : {
         $Type         : 'UI.HeaderInfoType',
         TypeName      : 'Product',
@@ -148,7 +149,7 @@ annotate service.Products with @(
         Visualization: #Rating,
         Value        : rating
     },
-    UI.FieldGroup #HeaderA : {
+    UI.FieldGroup #SupplierAndCategory : {
         $Type : 'UI.FieldGroupType',
         Data : [
             {
@@ -198,8 +199,8 @@ annotate service.Products with @(
     UI.HeaderFacets  : [
         {
             $Type : 'UI.ReferenceFacet',
-            Target : '@UI.FieldGroup#HeaderA',
-            ID : 'HeaderA'
+            Target : '@UI.FieldGroup#SupplierAndCategory',
+            ID : 'SupplierAndCategory'
         },
         {
             $Type : 'UI.ReferenceFacet',
@@ -248,6 +249,6 @@ annotate service.Products with @(
             Target : 'toReviews/@UI.LineItem',
             Label : 'Reviews',
             ID : 'Reviews'
-        },
+        }
     ]
 );
