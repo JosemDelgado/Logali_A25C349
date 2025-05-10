@@ -6,27 +6,30 @@ using {
     sap.common.CodeList
 } from '@sap/cds/common';
 
+using {API_BUSINESS_PARTNER as cloud} from '../srv/external/API_BUSINESS_PARTNER';
+
 entity Products : cuid, managed {
     product       : String(8);
     productName   : String(80);
     description   : LargeString;
-    category      : Association to Categories; //category      --- category_ID
-    subCategory   : Association to SubCategories; //subCategory   --- subCategory_ID
-    statu         : Association to Status; //statu --- statu_code
-    price         : Decimal(5, 2);
+    category      : Association to Categories;              //category      --- category_ID
+    subCategory   : Association to SubCategories;           //subCategory   --- subCategory_ID
+    statu         : Association to Status;                  //statu --- statu_code
+    price         : Decimal(6, 2);
     rating        : Decimal(3, 2);
     currency      : String;
-    detail        : Association to ProductDetails;
+    detail        : Composition of ProductDetails;          //Deep Insert
     supplier      : Association to Suppliers;
+    supplierCloud : Association to cloud.A_Supplier;
     toReviews     : Association to many Reviews
                         on toReviews.product = $self;
-    toInventories : Association to many Inventories
+    toInventories : Composition of many Inventories
                         on toInventories.product = $self;
     toSales       : Association to many Sales
                         on toSales.product = $self;
 };
 
-type decimal : Decimal(5, 3);
+type decimal : Decimal(6, 3);
 
 entity ProductDetails : cuid {
     baseUnit   : String default 'EA';
@@ -60,12 +63,12 @@ entity Reviews : cuid {
 };
 
 entity Inventories : cuid {
-    stockNumber : String(9);
+    stockNumber : String(11);
     department  : Association to Departments;
-    min         : Integer;
-    max         : Integer;
+    min         : Integer default 0;
+    max         : Integer default 500;
     target      : Integer;
-    quantity    : Decimal(4, 3);
+    quantity    : Decimal(6, 3);
     baseUnit    : String default 'EA';
     product     : Association to Products;
 };
@@ -88,6 +91,13 @@ entity Status : CodeList {
         };
         criticality : Integer;
 };
+
+entity Options : CodeList {
+    key code : String(10) enum {
+        A = 'Add';
+        D = 'Discount';
+    }
+}
 
 /** Value Helps */
 
